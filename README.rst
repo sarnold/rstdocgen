@@ -12,21 +12,18 @@ What is this thing?
 ===================
 
 Mainly some helper tools to create/maintain reStructuredText_ document
-includes to build larger (and more dynamic) documents such as `this System
-Test Description`_ template.
-
-.. _reStructuredText: https://docutils.sourceforge.io/rst.html
-.. _rst2pdf: https://rst2pdf.org/
+includes to build larger (and more dynamic) documents such as the one
+produced from `this System Test Description`_ template.
 
 Generator tools
 ---------------
 
-* ``tcgenyaml`` - generate new source file with test case metadata
+* ``gentestcase`` - generate new source file with test case metadata
 
   - input: YAML data file
   - output: YAML test case source file stub with example steps
 
-* ``tcgenrst`` - generate test case metadata and procedures doc from source
+* ``genrstdocs`` - generate test case metadata and procedures doc from source
 
   - input: YAML source file for test case
   - output: formatted document source in single ``.rst`` file
@@ -42,11 +39,11 @@ In addition to generating formatted test cases in reStructuredText_, we also
 need to generate a cross-reference report showing both forward and inverse
 traceability for requirement IDs and test case IDs.
 
-* ``tctrace`` - generate SRVM cross-reference report for STD chapter 5
+* ``gentrace`` - generate SRVM cross-reference report for STD chapter 5
 
   - inputs: test case (YAML) sources and project data (typically CSV export
     from spreadsheet)
-  - output: forward and inverse traceability report
+  - output: forward and inverse traceability reports
 
 
 Software Stack and Tool Dependencies
@@ -73,6 +70,8 @@ downstream System/software Test Description template the core workflow and
 optional dependencies are documented in the README_ and captured in the
 ``tox.ini`` files.
 
+.. _reStructuredText: https://docutils.sourceforge.io/rst.html
+.. _rst2pdf: https://rst2pdf.org/
 .. _this System Test Description:
 .. _README: https://github.com/VCTLabs/software_test_description_template
 
@@ -112,7 +111,7 @@ then install the hooks into the repo you just created from the template::
 
 It's usually a good idea to update the hooks to the latest version::
 
-    $ pre-commit autoupdate
+  $ pre-commit autoupdate
 
 Most (but not all) of the pre-commit checks will make corrections for you,
 however, some will only report errors, so these you will need to correct
