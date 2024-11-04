@@ -41,8 +41,8 @@ traceability for requirement IDs and test case IDs.
 
 * ``gentrace`` - generate SRVM cross-reference report for STD chapter 5
 
-  - inputs: test case (YAML) sources and project data (typically CSV export
-    from spreadsheet)
+  - inputs: test case (YAML) sources and project data (typically doorstop_
+    or CSV export)
   - output: forward and inverse traceability reports
 
 
@@ -56,6 +56,7 @@ Install the following with your system package manager to run the workflows:
 
 .. _Python: https://docs.python.org/3.9/index.html
 .. _Tox: https://tox.wiki/en/latest/user_guide.html
+.. _doorstop: https://doorstop.readthedocs.io/en/latest/index.html
 
 
 Now you can use the workflow commands to install the remaining dependencies

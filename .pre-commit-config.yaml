@@ -2,7 +2,7 @@
 #   pre-commit install --install-hooks
 # To update the pre-commit hooks run:
 #   pre-commit autoupdate
-exclude: '^(.tox/|^toxfile.py$)'
+exclude: '^(.tox/|docs/|^toxfile.py$)'
 repos:
   - repo: meta
     hooks:
@@ -46,6 +46,12 @@ repos:
         - --install-types
         - --non-interactive
         - --ignore-missing-imports
+      additional_dependencies:
+        - "munch[yaml]"
+        - "munch-stubs"
+        - "ruamel.yaml"
+        - "rstobj"
+      files: src/
 
   - repo: "https://github.com/asottile/blacken-docs"
     rev: "1.19.1"

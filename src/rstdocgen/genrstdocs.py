@@ -10,6 +10,7 @@ from typing import Dict, List
 
 from munch import Munch
 from rstobj import directives, markup
+
 from yaml_tools.utils import get_filelist, load_config, text_file_reader
 
 if sys.version_info < (3, 8):
@@ -209,8 +210,9 @@ def main(argv=None):  # pragma: no cover
 
     args = parser.parse_args()
 
+    pkg_path = 'rstdocgen.data'
     self_name = Path(__file__).stem
-    cfg, pfile = load_config(self_name)
+    cfg, pfile = load_config(self_name, pkg_path)
     popts = Munch.toDict(cfg)
     outdir = popts['output_path']
 

@@ -1,4 +1,4 @@
-""""
+"""
 Simple testcase generator using default procedure template.
 """
 
@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Dict
 
 from munch import Munch
+
 from yaml_tools.utils import load_config, process_template
 
 if sys.version_info < (3, 8):
@@ -30,9 +31,14 @@ PREFIX_MAP = {
 }
 
 
-def dir_from_name(name: str, opts: Dict, debug: bool):
+def dir_from_name(name: str, opts: Dict, debug: bool) -> str:
     """
-    Get the subdir name from test case ID.
+    Get the subdir name from canonical test case filename.
+
+    :param name: Test case source filename
+    :param opts: Options from active config
+
+    :returns: Directory name for test type
     """
     keyname = name.partition(opts["id_sep"])[0]
     dirname = PREFIX_MAP[keyname]
@@ -45,7 +51,7 @@ def create_outyaml(data: str, context: Path, opts: Dict, debug: bool):
     """
     Construct the testcase filename and write out processed data.
     """
-    doc = Munch.fromYAML(data)
+    doc = Munch.fromYAML(data)  # type: ignore [attr-defined]
     out_name = f'{doc.id}-{context.stem}.yaml'
     print(f"Got test data for {doc.id}")
     dir_name = dir_from_name(out_name, opts, debug)
@@ -79,7 +85,7 @@ def main(argv=None):  # pragma: no cover
         argv = sys.argv
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        description=''''Generate RST test case from YAML source(s).
+        description='''Generate RST test case from YAML source(s).
             Either provide a single source file as the last argument
             or use the ``--file-glob`` argument to search under the
             path provided by the ``source_path`` key in the config
@@ -116,8 +122,9 @@ def main(argv=None):  # pragma: no cover
 
     args = parser.parse_args()
 
+    pkg_path = 'rstdocgen.data'
     self_name = Path(__file__).stem
-    cfg, pfile = load_config(self_name)
+    cfg, pfile = load_config(self_name, pkg_path)
     popts = Munch.toDict(cfg)
     outdir = popts['output_path']
 
