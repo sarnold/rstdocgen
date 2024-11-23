@@ -1,0 +1,13 @@
+# settings for test case generator
+id_sep: '-'
+file_encoding: 'utf-8'
+jinja2_line_statements: true
+output_path: tests/testdata/out
+template_file: 'test_case_stub.tmpl'
+template_path: tests/testdata/templates
+csv_delimiter: ';'
+preserve_quotes: true
+process_comments: true
+mapping: 4
+sequence: 6
+offset: 4

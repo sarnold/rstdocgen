@@ -2,14 +2,14 @@
 #   pre-commit install --install-hooks
 # To update the pre-commit hooks run:
 #   pre-commit autoupdate
-exclude: '^(.tox/|ext/|^toxfile.py$)'
+exclude: '^(.tox/|docs/|^toxfile.py$)'
 repos:
   - repo: meta
     hooks:
       - id: check-useless-excludes
       - id: check-hooks-apply
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -23,22 +23,22 @@ repos:
       - id: end-of-file-fixer
       - id: mixed-line-ending
         args: [--fix=lf]
-      #- id: check-toml
+      - id: check-toml
 
   - repo: https://github.com/ambv/black
-    rev: 23.7.0
+    rev: 24.10.0
     hooks:
       - id: black
         name: "Format code"
         language_version: python3
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.1
+    rev: v1.13.0
     hooks:
     - id: mypy
       args:
@@ -46,9 +46,15 @@ repos:
         - --install-types
         - --non-interactive
         - --ignore-missing-imports
+      additional_dependencies:
+        - "munch[yaml]"
+        - "munch-stubs"
+        - "ruamel.yaml"
+        - "rstobj"
+      files: src/
 
   - repo: "https://github.com/asottile/blacken-docs"
-    rev: "1.16.0"
+    rev: "1.19.1"
     hooks:
       - id: "blacken-docs"
         name: "Format docs (blacken-docs)"
@@ -57,7 +63,7 @@ repos:
           - "black==23.1.0"
 
   - repo: https://github.com/PyCQA/doc8
-    rev: v1.1.1
+    rev: v1.1.2
     hooks:
       - id: doc8
         args:
@@ -72,7 +78,7 @@ repos:
       - id: rst-inline-touching-normal
 
   - repo: https://github.com/myint/autoflake
-    rev: v2.2.0
+    rev: v2.3.1
     hooks:
       - id: autoflake
         args:
@@ -82,7 +88,7 @@ repos:
           - --remove-unused-variables
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
+    rev: 7.1.1
     hooks:
       - id: flake8
         additional_dependencies: ["flake8-bugbear"]

@@ -1,0 +1,13 @@
+# settings for test case generator
+id_sep: '-'
+file_encoding: 'utf-8'
+file_glob: '*.yaml'
+output_path: tests/testdata/out
+source_path: tests/testdata/out
+page_break: '\n\n.. raw:: pdf/n/n   PageBreak\n'
+csv_delimiter: ';'
+preserve_quotes: true
+process_comments: true
+mapping: 4
+sequence: 6
+offset: 4
