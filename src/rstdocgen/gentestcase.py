@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Dict
 
 from munch import Munch
-
 from yaml_tools.utils import load_config, process_template
 
 if sys.version_info < (3, 8):
@@ -18,17 +17,14 @@ else:
 
 VERSION = version('rstdocgen')
 
+##
+# opts["prefix_map"] => from default config file
 # map of ID prefix to name for categories of test cases.
 #   type setup goes with STD doc Cha 3 Test Preparations
 #   type performance goes with STD doc Cha 4 Test Descriptions
 # 3) setup cases are prerequisites to 4) test cases.
 # setup cases may also include initial data collection for later test cases.
 # the mapped name is used for the folder name under OUT_PATH/tests.
-PREFIX_MAP = {
-    "PT": "performance",
-    "ST": "security",
-    "SU": "setup",
-}
 
 
 def dir_from_name(name: str, opts: Dict, debug: bool) -> str:
@@ -40,8 +36,8 @@ def dir_from_name(name: str, opts: Dict, debug: bool) -> str:
 
     :returns: Directory name for test type
     """
-    keyname = name.partition(opts["id_sep"])[0]
-    dirname = PREFIX_MAP[keyname]
+    keyname: str = name.partition(opts["id_sep"])[0]
+    dirname: str = opts["prefix_map"][keyname]
     if debug:
         print(f"key, dirname: {keyname}, {dirname}")
     return dirname
@@ -123,7 +119,8 @@ def main(argv=None):  # pragma: no cover
     args = parser.parse_args()
 
     pkg_path = 'rstdocgen.data'
-    self_name = Path(__file__).stem
+    self_cfg = 'rstdocgen.yaml'
+    self_name = Path(self_cfg).stem
     cfg, pfile = load_config(self_name, pkg_path)
     popts = Munch.toDict(cfg)
     outdir = popts['output_path']
