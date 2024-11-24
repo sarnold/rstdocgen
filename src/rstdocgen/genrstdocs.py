@@ -10,7 +10,6 @@ from typing import Dict, List
 
 from munch import Munch
 from rstobj import directives, markup
-
 from yaml_tools.utils import get_filelist, load_config, text_file_reader
 
 if sys.version_info < (3, 8):
@@ -30,9 +29,9 @@ def inc_from_name(fname: str, opts: Dict, debug: bool) -> str:
     if debug:
         print(f"test, num: {test}, {num}")
     _, sub_num, _ = num.split(".")
-    if test == "SU":
+    if test == opts["prefix_map"]["SU"]:
         inc_file = f"includes/test_prep_{sub_num}.rst"
-    elif test in ["PT", "ST"]:
+    else:
         inc_file = f"includes/test_desc_{sub_num}.rst"
     if debug:
         print(f"Include name: {inc_file}")
@@ -211,7 +210,8 @@ def main(argv=None):  # pragma: no cover
     args = parser.parse_args()
 
     pkg_path = 'rstdocgen.data'
-    self_name = Path(__file__).stem
+    self_cfg = 'rstdocgen.yaml'
+    self_name = Path(self_cfg).stem
     cfg, pfile = load_config(self_name, pkg_path)
     popts = Munch.toDict(cfg)
     outdir = popts['output_path']
@@ -233,8 +233,8 @@ def main(argv=None):  # pragma: no cover
         print(f'Creating output directory {outdir}')
     Path(outdir).mkdir(exist_ok=True)
 
-    file_glob = get_filelist(popts["source_path"], popts["file_glob"], debug)
-    files = file_glob if args.glob else [args.file]
+    files_glob = get_filelist(popts["source_path"], popts["file_glob"], debug)
+    files = files_glob if args.glob else [args.file]
     if debug:
         print(files)
     for filearg in files:
