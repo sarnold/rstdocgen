@@ -22,7 +22,8 @@ VERSION = version('rstdocgen')
 
 def inc_from_name(fname: str, opts: Dict, debug: bool) -> str:
     """
-    Get the include filename from test case filename.
+    Get the include filename from test case filename, relative to
+    ``opts["std_root_dir"]``
     """
     inc_file = ''
     test, num, _ = fname.split(opts["id_sep"], maxsplit=2)
@@ -47,7 +48,7 @@ def append_include(infile: Path, opts: Dict, debug: bool):
     inc_path = f"../tests/{infile.name}"
     inc = directives.miscellaneous.Include(path=inc_path)
     append_text = f"\n{inc.render()}\n{page_break}"
-    inc_file = Path('std') / inc_str
+    inc_file = Path(opts["std_root_dir"]) / inc_str
     if debug:
         print(f"Include file for writing: {inc_file}")
     inc_text = inc_file.read_text()
@@ -190,21 +191,22 @@ def main(argv=None):  # pragma: no cover
         '--save-config',
         action='store_true',
         dest="save",
-        help='save active config to default filename (.gentestcase.yml) and exit',
+        help='save active config to default filename (.genrstdocs.yml) and exit',
     )
     parser.add_argument(
         '-f',
         '--file-glob',
         action='store_true',
         dest="glob",
-        help='Find all source files via glob ',
+        help='Find all source files via glob from config',
     )
     parser.add_argument(
         'file',
         nargs='?',
         metavar="FILE",
         type=str,
-        help="Name of single source file",
+        default='',
+        help="Name of single source file (ignored when using --file-glob)",
     )
 
     args = parser.parse_args()

@@ -110,7 +110,7 @@ def main(argv=None):  # pragma: no cover
     )
     parser.add_argument(
         'file',
-        nargs='*',
+        nargs='+',
         metavar="FILE",
         type=str,
         help="Process input file(s) to target directory",
@@ -135,9 +135,6 @@ def main(argv=None):  # pragma: no cover
         sys.exit(0)
     if args.verbose:
         debug = True
-    if not args.file:
-        parser.print_help()
-        sys.exit(1)
     if debug:
         print(f'Creating output directory {outdir}')
     Path(outdir).mkdir(exist_ok=True)

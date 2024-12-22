@@ -3,11 +3,12 @@ id_sep: '-'
 file_encoding: 'utf-8'
 file_glob: '*.yaml'
 jinja2_line_statements: true
-output_path: tests/testdata/out
-source_path: tests/testdata/out
+output_path: std/tests
+source_path: std/tests
 template_file: 'test_case_stub.tmpl'
-template_path: tests/testdata/templates
+template_path: std/templates
 page_break: '\n\n.. raw:: pdf/n/n   PageBreak\n'
+std_root_dir: std
 csv_delimiter: ';'
 preserve_quotes: true
 process_comments: true
@@ -16,7 +17,7 @@ sequence: 6
 offset: 4
 prefix_map:
   - SU  # SU is required for setup (preparation) procedures
-    setup  # the rest are examples of test cases, change as needed
+    setup  # the rest are examples of test case types, adapt as needed
   - PT
     performance
   - ST
