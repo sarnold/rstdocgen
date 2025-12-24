@@ -1,6 +1,5 @@
-=======================================================
- RstDocGen - Generate test case doc snippets from YAML
-=======================================================
+RstDocGen - Generate test case doc snippets from YAML
+=====================================================
 
 |pre|
 
@@ -9,11 +8,15 @@
 **Documentation as Code** (and sometimes *it is* code)
 
 What is this thing?
-===================
+~~~~~~~~~~~~~~~~~~~
 
 Mainly some helper tools to create/maintain reStructuredText_ document
 includes to build larger (and more dynamic) documents such as the one
 produced from `this System Test Description`_ template.
+
+Yes, you still need to create your own test case metadata and procedures
+*but* you can do that in YAML and rSt source files and (re)generate your
+DID-compliant test documents as needed.
 
 Generator tools
 ---------------
@@ -53,11 +56,11 @@ traceability for requirement IDs and test case IDs.
 
 
 Software Stack and Tool Dependencies
-====================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Install the following with your system package manager to run the workflows:
 
-* Python_ - at least version 3.8
+* Python_ - at least version 3.9
 * Tox_ - at least version 4.2
 
 .. _Python: https://docs.python.org/3.9/index.html
@@ -65,7 +68,7 @@ Install the following with your system package manager to run the workflows:
 .. _doorstop: https://doorstop.readthedocs.io/en/latest/index.html
 
 
-Now you can use the workflow commands to install the remaining dependencies
+Use the workflow commands to install the remaining dependencies
 using Python virtual environments inside the project directory and use the
 tools for generating document sources, eg, test case snippets.
 
@@ -84,7 +87,7 @@ optional dependencies are documented in the README_ and captured in the
 
 
 Contributing
-============
+~~~~~~~~~~~~
 
 Please read CONTRIBUTING_ for details on the code of conduct and some general
 guidance on submitting pull requests.
@@ -145,7 +148,7 @@ To run all ``pre-commit`` checks manually, try::
 
 
 License
-=======
+~~~~~~~
 
 This project is licensed under the MIT license - see the `LICENSE file`_ for
 details.

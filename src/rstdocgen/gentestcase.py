@@ -4,16 +4,12 @@ Simple testcase generator using default procedure template.
 
 import argparse
 import sys
+from importlib.metadata import version
 from pathlib import Path
 from typing import Dict
 
 from munch import Munch
 from yaml_tools.utils import load_config, process_template
-
-if sys.version_info < (3, 8):
-    from importlib_metadata import version
-else:
-    from importlib.metadata import version
 
 VERSION = version('rstdocgen')
 
@@ -25,6 +21,7 @@ VERSION = version('rstdocgen')
 # 3) setup cases are prerequisites to 4) test cases.
 # setup cases may also include initial data collection for later test cases.
 # the mapped name is used for the folder name under OUT_PATH/tests.
+##
 
 
 def dir_from_name(name: str, opts: Dict, debug: bool) -> str:
@@ -63,9 +60,9 @@ def process_inputs(filearg: str, opts: Dict, debug: bool):
     """
     Process input data file+template and create YAML test case source.
     """
-    context_data = Path(filearg)
-    template_yaml = Path(opts["template_path"]) / opts["template_file"]
-    out_str = process_template(template_yaml, context_data, opts)
+    context_data = Path(filearg).resolve()
+    template_yaml = Path(opts["template_path"]).resolve() / opts["template_file"]
+    out_str = process_template(str(template_yaml), str(context_data), opts)
     if debug:
         print(out_str)
     create_outyaml(out_str, context_data, opts, debug)
