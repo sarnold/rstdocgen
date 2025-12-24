@@ -10,7 +10,6 @@ from typing import Dict, List
 
 from munch import Munch
 from rstobj import directives, markup
-
 from yaml_tools.utils import get_filelist, load_config, text_file_reader
 
 if sys.version_info < (3, 8):
@@ -23,16 +22,17 @@ VERSION = version('rstdocgen')
 
 def inc_from_name(fname: str, opts: Dict, debug: bool) -> str:
     """
-    Get the include filename from test case filename.
+    Get the include filename from test case filename, relative to
+    ``opts["std_root_dir"]``
     """
     inc_file = ''
     test, num, _ = fname.split(opts["id_sep"], maxsplit=2)
     if debug:
         print(f"test, num: {test}, {num}")
     _, sub_num, _ = num.split(".")
-    if test == "SU":
+    if test == opts["prefix_map"]["SU"]:
         inc_file = f"includes/test_prep_{sub_num}.rst"
-    elif test in ["PT", "ST"]:
+    else:
         inc_file = f"includes/test_desc_{sub_num}.rst"
     if debug:
         print(f"Include name: {inc_file}")
@@ -48,7 +48,7 @@ def append_include(infile: Path, opts: Dict, debug: bool):
     inc_path = f"../tests/{infile.name}"
     inc = directives.miscellaneous.Include(path=inc_path)
     append_text = f"\n{inc.render()}\n{page_break}"
-    inc_file = Path('std') / inc_str
+    inc_file = Path(opts["std_root_dir"]) / inc_str
     if debug:
         print(f"Include file for writing: {inc_file}")
     inc_text = inc_file.read_text()
@@ -191,27 +191,29 @@ def main(argv=None):  # pragma: no cover
         '--save-config',
         action='store_true',
         dest="save",
-        help='save active config to default filename (.gentestcase.yml) and exit',
+        help='save active config to default filename (.genrstdocs.yml) and exit',
     )
     parser.add_argument(
         '-f',
         '--file-glob',
         action='store_true',
         dest="glob",
-        help='Find all source files via glob ',
+        help='Find all source files via glob from config',
     )
     parser.add_argument(
         'file',
         nargs='?',
         metavar="FILE",
         type=str,
-        help="Name of single source file",
+        default='',
+        help="Name of single source file (ignored when using --file-glob)",
     )
 
     args = parser.parse_args()
 
     pkg_path = 'rstdocgen.data'
-    self_name = Path(__file__).stem
+    self_cfg = 'rstdocgen.yaml'
+    self_name = Path(self_cfg).stem
     cfg, pfile = load_config(self_name, pkg_path)
     popts = Munch.toDict(cfg)
     outdir = popts['output_path']
@@ -233,8 +235,8 @@ def main(argv=None):  # pragma: no cover
         print(f'Creating output directory {outdir}')
     Path(outdir).mkdir(exist_ok=True)
 
-    file_glob = get_filelist(popts["source_path"], popts["file_glob"], debug)
-    files = file_glob if args.glob else [args.file]
+    files_glob = get_filelist(popts["source_path"], popts["file_glob"], debug)
+    files = files_glob if args.glob else [args.file]
     if debug:
         print(files)
     for filearg in files:

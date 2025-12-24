@@ -1,5 +1,5 @@
-Welcome to the yaml-tools documentation!
-========================================
+Welcome to rstdocgen documentation!
+===================================
 
 .. toctree::
     :maxdepth: 4

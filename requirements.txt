@@ -1,3 +1,3 @@
 munch[yaml]
 rstobj
-yaml-tools @ git+https://github.com/sarnold/yaml-tools.git@0.4.1#f0fa49a52df350d6ef8815e68d24709364f53ca4
+yaml-tools @ https://github.com/sarnold/yaml-tools/releases/download/0.4.2/yaml_tools-0.4.2-py3-none-any.whl

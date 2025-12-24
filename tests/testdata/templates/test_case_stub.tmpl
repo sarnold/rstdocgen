@@ -1,0 +1,24 @@
+id: {{tcid}}
+title: {{title}}
+purpose: {{purpose}}
+description:
+  {{description}}
+reqs:
+  - id: {{reqid}}
+    method: {{vermethod}}
+prereqs: |-
+  {{prereqs}}
+inputs: |-
+  {{inputs}}
+expected_results: |-
+  {{expected_results}}
+assumptions_constraints: |-
+  {{assumptions_constraints}}
+steps:
+# for step in steps:
+  - Step: {{loop.index}}
+    Action: |-
+      Multiline unicode text string with line-breaks, avoid extraneous puncuation.
+    Expected Result: |-
+      Multiline unicode text string with line-breaks, avoid extraneous puncuation.
+# endfor

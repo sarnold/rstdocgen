@@ -1,6 +1,6 @@
-==================================================
- RstDocGen - Generate doc snippets from YAML data
-==================================================
+=======================================================
+ RstDocGen - Generate test case doc snippets from YAML
+=======================================================
 
 |pre|
 
@@ -34,6 +34,12 @@ a complete Test Description document.
 
 Traceability tool
 -----------------
+
+.. code-block:: python
+
+    print("Coming soon...")
+    raise NotImplementedError
+
 
 In addition to generating formatted test cases in reStructuredText_, we also
 need to generate a cross-reference report showing both forward and inverse
